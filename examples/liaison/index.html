@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en" data-framework="liaison">
+	<head>
+		<meta charset="utf-8">
+		<title>liaison • TodoMVC</title>
+		<link rel="stylesheet" href="node_modules/todomvc-common/base.css">
+		<link rel="stylesheet" href="node_modules/todomvc-app-css/index.css">
+	</head>
+	<body>
+		<section id="todoapp">
+			<template id="todo-template">
+				<header id="header">
+					<h1>todos</h1>
+					<form id="todo-form" on-submit="{{addTodo}}">
+						<input id="new-todo" placeholder="What needs to be done?" value="{{newTodo}}" autofocus>
+					</form>
+				</header>
+				<section id="main" l-show="{{todos.length}}">
+					<input id="toggle-all" type="checkbox" checked="{{allChecked}}" on-click="{{markAll}}">
+					<label for="toggle-all">Mark all as complete</label>
+					<ul id="todo-list">
+						<template repeat="{{filteredTodos}}">
+							<li class="{{completed:completed}} {{editing:beingEdited}}">
+								<div class="view">
+									<input class="toggle" type="checkbox" checked="{{completed}}">
+									<label on-dblclick="{{editTodo}}">{{title}}</label>
+									<button class="destroy" on-click="{{removeTodo}}"></button>
+								</div>
+								<form on-submit="{{doneEditing}}">
+									<input class="edit" value="{{title}}" on-keydown="{{cancelEditing}}" on-blur="{{doneEditing}}" todo-focus="{{beingEdited}}">
+								</form>
+							</li>
+						</template>
+					</ul>
+				</section>
+				<footer id="footer" l-show="{{todos.length}}">
+					<span id="todo-count">
+						<strong>{{activeTodos.length}}</strong>
+						item<span l-show="{{hasMoreThanOneActiveTodos}}">s</span> left
+					</span>
+					<ul id="filters">
+						<li>
+							<a class="{{selected:isFilterModeAll}}" href="#/">All</a>
+						</li>
+						<li>
+							<a class="{{selected:isFilterModeActive}}" href="#/active">Active</a>
+						</li>
+						<li>
+							<a class="{{selected:isFilterModeCompleted}}" href="#/completed">Completed</a>
+						</li>
+					</ul>
+					<button id="clear-completed" l-show="{{doneTodos.length}}" on-click="{{clearDoneTodos}}">Clear completed ({{doneTodos.length}})</button>
+				</footer>
+			</template>
+		</section>
+		<footer id="info">
+			<p>Double-click to edit a todo</p>
+			<p>Credits:
+				<a href="http://twitter.com/asudoh">Akira Sudoh</a>
+			</p>
+			<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+		</footer>
+		<script src="node_modules/todomvc-common/base.js"></script>
+		<script src="node_modules/requirejs/require.js" data-main="js/main"></script>
+	</body>
+</html>
